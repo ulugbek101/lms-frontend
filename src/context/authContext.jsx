@@ -10,6 +10,7 @@ export const AuthContext = createContext({
         email: "",
         first_name: "",
         last_name: "",
+        middle_name: "",
         role: "",
         is_superuser: "",
         is_staff: "",

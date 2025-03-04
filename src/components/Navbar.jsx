@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
+
 function Navbar() {
+	const { logoutUser, user } = useContext(AuthContext);
+
 	return (
 		<nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
 			<div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -33,7 +38,7 @@ function Navbar() {
 								alt="FlowBite Logo"
 							/>
 							<span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-								Flowbite
+								SHAMS <span className="text-red-500">XM</span>
 							</span>
 						</a>
 					</div>
@@ -49,8 +54,8 @@ function Navbar() {
 									<span className="sr-only">Open user menu</span>
 									<img
 										className="w-8 h-8 rounded-full"
-										src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-										alt="user photo"
+										src="https://res.cloudinary.com/dhtrn05k4/image/upload/v1/shams-media/profile-pictures/user-default.png"
+										alt={`${user.first_name} ${user.last_name}`}
 									/>
 								</button>
 							</div>
@@ -63,13 +68,13 @@ function Navbar() {
 										className="text-sm text-gray-900 dark:text-white"
 										role="none"
 									>
-										Neil Sims
+										{user.first_name} {user.last_name}
 									</p>
 									<p
 										className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
 										role="none"
 									>
-										neil.sims@flowbite.com
+										{user.email}
 									</p>
 								</div>
 								<ul className="py-1" role="none">
@@ -101,13 +106,13 @@ function Navbar() {
 										</a>
 									</li>
 									<li>
-										<a
-											href="#"
-											className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+										<p
+											onClick={logoutUser}
+											className="block text-sm text-red-500 gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:cursor-pointer transition"
 											role="menuitem"
 										>
-											Sign out
-										</a>
+											Chiqish
+										</p>
 									</li>
 								</ul>
 							</div>
