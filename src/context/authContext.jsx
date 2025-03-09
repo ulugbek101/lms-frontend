@@ -26,7 +26,7 @@ export const AuthContext = createContext({
 
 
 function AuthContextProvider({ children }) {
-    const [user, setUser] = useState(() => localStorage.getItem("_lms_authTokens") ? jwtDecode(JSON.parse(localStorage.getItem("_lms_authTokens")).access) : null);
+    const [user, setUser] = useState(() => localStorage.getItem("_lms_user") ? JSON.parse(localStorage.getItem("_lms_user")) : null);
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("_lms_authTokens") ? JSON.parse(localStorage.getItem("_lms_authTokens")) : null);
     const navigate = useNavigate();
 
@@ -49,6 +49,7 @@ function AuthContextProvider({ children }) {
                 setAuthTokens(authTokens);
                 setUser(decodedUser);
                 localStorage.setItem("_lms_authTokens", JSON.stringify(authTokens));
+                localStorage.setItem("_lms_user", JSON.stringify(decodedUser));
 
                 navigate("/");
                 toast.success(`Assalomu alaykum, ${decodedUser.first_name} ${decodedUser.last_name} 👋`);
@@ -91,6 +92,7 @@ function AuthContextProvider({ children }) {
         logoutUser,
         setAuthTokens,
     }
+
     return <AuthContext.Provider value={value}>
         {children}
     </AuthContext.Provider>
