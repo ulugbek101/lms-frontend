@@ -113,15 +113,15 @@ function ProfilePage() {
 					<div className="w-full flex flex-col gap-2 mt-6">
 						<h2 className="flex items-center gap-1 py-2 w-full justify-between border-b dark:border-b-white border-b-black">
 							<span className="font-bold text-md">F.I.O: </span>
-							{user.first_name} {user.last_name} {user.middle_name}
+							<span>{user.first_name} {user.last_name} {user.middle_name}</span>
 						</h2>
 						<h2 className="flex items-center gap-1 py-2 w-full justify-between border-b dark:border-b-white border-b-black">
 							<span className="font-bold text-md">E-mail manzil: </span>
-							{user.email}
+							<span>{user.email}</span>
 						</h2>
 						<h2 className="flex items-center gap-1 py-2 w-full justify-between border-b dark:border-b-white border-b-black">
 							<span className="font-bold text-md">Lavozim: </span>
-							{user.role}
+							<span>{user.role}</span>
 						</h2>
 					</div>
 				</div>
