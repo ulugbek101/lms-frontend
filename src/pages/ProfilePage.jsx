@@ -88,6 +88,8 @@ function ProfilePage() {
 				}
 			);
 			toast.success("Parol muvaffaqiyatli yangilandi");
+			setPassword1("");
+			setPassword2("");
 		}
 		catch (error) {
 			toast.error(
