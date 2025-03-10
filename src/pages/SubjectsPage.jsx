@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import TableContainer from "../components/TableContainer";
 import useAxios from "../hooks/useAxios";
+import Modal from "../components/Modal"
 
 function SubjectsPage() {
 	const axiosInstance = useAxios();
 	const [subjects, setSubjects] = useState([]);
 	const [subjectsAreLoading, setSubjectsAreLoading] = useState(false);
+	const [createSubjectModalIsOpen, setCreateSubjectModalIsOpen] = useState(false);
 
 	async function fetchSubjects() {
 		setSubjectsAreLoading(true);
@@ -30,7 +32,7 @@ function SubjectsPage() {
 	return (
 		<Container extraClasses="flex flex-col gap-5">
 			<div className="w-full flex flex-row justify-between">
-				<button className="px-4 py-2 rounded-lg text-center bg-blue-600 hover:bg-blue-700 transition hover:cursor-pointer active:scale-95 flex flex-row gap-1 items-center">
+				<button onClick={() => setCreateSubjectModalIsOpen(true)} className="px-4 py-2 rounded-lg text-center bg-blue-600 hover:bg-blue-700 transition hover:cursor-pointer active:scale-95 flex flex-row gap-1 items-center">
 					<span className="material-icons">layers</span>
 					Fan qo'shish
 				</button>
@@ -51,17 +53,20 @@ function SubjectsPage() {
 			</div>
 			<TableContainer>
 				<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-					<tr>
-						<th scope="col" className="px-6 py-3">
+					<tr className="grid grid-cols-8">
+						<th scope="col" className="px-6 py-3 col-span-1">
 							№
 						</th>
-						<th scope="col" className="px-6 ps-16 py-3">
+						<th scope="col" className="px-6 text-center py-3 col-span-2">
 							Fan nomi
 						</th>
-						<th scope="col" className="px-6 ps-30 py-3">
+						<th scope="col" className="px-6 text-center py-3 col-span-2">
+							Guruhlar soni
+						</th>
+						<th scope="col" className="px-6 text-center py-3 col-span-2">
 							Yaratilgan sana
 						</th>
-						<th scope="col" className="px-6 py-3 text-right">
+						<th scope="col" className="px-6 py-3 text-right col-span-1">
 							<span className="sr-only">Edit</span>
 							Tahrirlash/O'chirish
 						</th>
@@ -71,20 +76,28 @@ function SubjectsPage() {
 			<TableContainer>
 				<tbody>
 					{subjects.map((subject, index) => (
-						<tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+						<tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 grid grid-cols-8">
 							<th
 								scope="row"
-								className="px-6 py-4 font-semibold"
+								className="flex items-center px-6 py-4 font-semibold col-span-1"
 							>
 								{index + 1}
 							</th>
-							<td className="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+							<td className="flex items-center justify-center px-6 py-4 font-semibold text-gray-900 whitespace-nowrap dark:text-white col-span-2">
 								{subject.name}
 							</td>
-							<td className="px-6 py-4 font-semibold">
-								{new Date(subject.created).toLocaleDateString("en-GB")}
+							<td className="flex items-center justify-center px-6 py-4 font-semibold text-gray-900 whitespace-nowrap dark:text-white col-span-2">
+								{subject.groups}
 							</td>
-							<td className="px-6 py-4 text-right flex flex-row justify-end items-center gap-5">
+							<td className="flex items-center justify-center px-6 py-4 font-semibold col-span-2">
+								{new Date(subject.created).toLocaleDateString("en-GB", {
+									hour: "2-digit",
+									minute: "2-digit",
+									second: "2-digit",
+									hour12: false, // Set to true for 12-hour format
+								})}
+							</td>
+							<td className="px-6 py-4 text-right flex flex-row justify-end items-center gap-5 col-span-1">
 								<span className="material-icons p-2 transition hover:cursor-pointer hover:text-yellow-500 hover:scale-105 active:scale-95 select-none">edit_square</span>
 								<span className="material-icons p-2 transition hover:cursor-pointer hover:text-red-500 hover:scale-105 active:scale-95 select-none">delete</span>
 							</td>
@@ -92,6 +105,11 @@ function SubjectsPage() {
 					))}
 				</tbody>
 			</TableContainer>
+			{createSubjectModalIsOpen && (
+				<Modal onClose={setCreateSubjectModalIsOpen}>
+					
+				</Modal>
+			)}
 		</Container>
 	);
 }
